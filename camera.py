@@ -4,11 +4,12 @@ from PIL import Image
 import imutils
 from edgetpu.detection.engine import DetectionEngine
 import time
+import os
 
 class CoralCam(object):
     def __init__(self):
         # initialize detection model
-        self.model = DetectionEngine('/home/pi/coral/coralcam/models/mobilenet_ssd_v2/mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite')
+        self.model = DetectionEngine(os.path.abspath('models/mobilenet_ssd_v2/mobilenet_ssd_v2_coco_quant_postprocess_edgetpu.tflite'))
 
         # read label file
         self.read_labels()
@@ -24,7 +25,7 @@ class CoralCam(object):
 
     def read_labels(self):
         self.labels = {}
-        for row in open('/home/pi/coral/coralcam/models/mobilenet_ssd_v2/coco_labels.txt'):
+        for row in open(os.path.abspath('models/mobilenet_ssd_v2/coco_labels.txt')):
             (classID, label) = row.strip().split(maxsplit=1)
             self.labels[int(classID)] = label.strip()
 
